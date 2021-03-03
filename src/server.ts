@@ -1,12 +1,20 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
+import cors from 'cors';
 
 import { PingResolver } from './resolvers/ping';
 import { ProductResolver } from './resolvers/ProductResolver';
 
 export async function startServer() {
     const app = express();
+
+    app.use(
+        cors({
+          credentials: true,
+          origin: "*"
+        })
+    );
 
     const server = new ApolloServer({
         schema: await buildSchema({
